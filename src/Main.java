@@ -2,11 +2,16 @@
 
 public class Main {
 
+    static int count = 0;
+
     public static void main(String[] args) {
 
         //linkedListTest();
         //stackTest();
-        binaryTreeTest();
+        //binaryTreeTest();
+        //fibonacciTest();
+        //stepsTest();
+        sortTest();
 
     }
 
@@ -74,4 +79,77 @@ public class Main {
         tree.print();
     }
 
+    private static void fibonacciTest() {
+        long startTime;
+        long endTime;
+
+        startTime = System.currentTimeMillis();
+        System.out.println(Fibonacci.fibonacci(40));
+        endTime = System.currentTimeMillis();
+        System.out.println("That took " + (endTime - startTime) + " milliseconds");
+
+        startTime = System.currentTimeMillis();
+        System.out.println(Fibonacci.fibonacciMemoization(1000));
+        endTime = System.currentTimeMillis();
+        System.out.println("That took " + (endTime - startTime) + " milliseconds");
+
+
+
+    }
+
+    private static void stepsTest() {
+        int n = steps(0, 15);
+        System.out.println("Solutions: " + n);
+        System.out.println("Count: " + count);
+    }
+
+    private static int steps(int start, int target) {
+
+        count++;
+
+        int solutions = 0;
+        int steps;
+
+        for (int i = 1; i <= 3; i++) {
+            steps = start + i;
+            if (steps == target) {
+                solutions++;
+            } else if (steps < target) {
+                solutions += steps(steps, target);
+            } else {
+                // steps already above target, do nothing
+            }
+        }
+
+        return solutions;
+    }
+
+    private static void sortTest() {
+        int listLength = 50000;
+        int[] masterList = new int[listLength];
+        int[] list = new int[listLength];
+        Sorting.initRandom(masterList, 100);
+
+        long startTime;
+        long endTime;
+
+        Sorting.copyList(masterList, list);
+        startTime = System.currentTimeMillis();
+        Sorting.bubbleSort(list);
+        endTime = System.currentTimeMillis();
+        System.out.println("Bubble sort: " + (endTime - startTime) + " milliseconds");
+
+        Sorting.copyList(masterList, list);
+        startTime = System.currentTimeMillis();
+        Sorting.selectionSort(list);
+        endTime = System.currentTimeMillis();
+        System.out.println("Selection sort: " + (endTime - startTime) + " milliseconds");
+
+        Sorting.copyList(masterList, list);
+        startTime = System.currentTimeMillis();
+        Sorting.mergeSort(list);
+        endTime = System.currentTimeMillis();
+        System.out.println("Merge sort: " + (endTime - startTime) + " milliseconds");
+
+    }
 }
